@@ -4,8 +4,12 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
     </head>
     <body>
-        {{{body}}}
-        <script src="/js/{{script}}.js" charset="utf-8"></script>
+        <div class="container">
+            {{{body}}}
+        </div>
+        {{#if script}}
+            <script src="/js/{{script}}.js" charset="utf-8"></script>   
+        {{/if}}
         <script src="/js/vendor.js" charset="utf-8"></script>
     </body>
 </html>

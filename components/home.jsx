@@ -7,8 +7,10 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div>
-                This is the homepage
+            <div className="row">
+                <div className="col">
+                    This is the homepage
+                </div>
             </div>
         );
     }

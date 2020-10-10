@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
 
     res.render('home', {
         layout: 'default',
-        script: 'home',
         title: 'Home',
         root: reactComp
     });
