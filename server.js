@@ -1,6 +1,6 @@
 import express from 'express';
 import compression from 'compression';
-import ssr from './routes/ssr';
+import routes from './routes/routes';
 import hbs from 'express-handlebars';
 
 const app = express();
@@ -16,7 +16,7 @@ app.engine('hbs', hbs({
     partialsDir: __dirname + '/views/partials/'
 }));
 
-app.use('/firstssr', ssr);
+app.use('/', routes);
 
 const port = process.env.PORT || 3030;
 

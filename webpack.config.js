@@ -3,10 +3,11 @@ const path = require('path');
 const config = {
     entry: {
         vendor: ['@babel/polyfill', 'react'],
-        app: ['./webpack/entries/index.js']
+        home: ['./webpack/entries/home.js'],
+        firstssr: ['./webpack/entries/firstssr.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'public/js'),
         filename: '[name].js'
     },
     module: {
