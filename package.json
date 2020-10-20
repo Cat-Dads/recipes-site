@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node server.js",
-    "webpack": "webpack -wd"
+    "webpack": "webpack -wd",
+    "release": "babel-node server.js",
+    "heroku-postbuild": "webpack -p"
   },
   "repository": {
     "type": "git",

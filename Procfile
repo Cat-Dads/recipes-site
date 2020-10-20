@@ -1,1 +1,1 @@
-web: npm run webpack & npm run dev & wait -n
+web: npm run release
