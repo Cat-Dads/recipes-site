@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node server.js",
-    "webpack": "webpack -wd"
+    "webpack": "webpack -wd",
+    "build": "webpack",
+    "start": "webpack-dev-server --port 3030"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,7 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^6.2.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
