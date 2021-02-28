@@ -1,15 +1,17 @@
 import React from 'react';
 
 class FirstSsr extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.handleButtonClick = this.handleButtonClick.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handleReset = this.handleReset.bind(this);
 
+        console.log(this.props);
+
         this.state = {
-            name: '',
+            name: this.props.foo ? this.props.foo : '',
             msg: ''
         };
     }
@@ -46,7 +48,7 @@ class FirstSsr extends React.Component {
         else {
             msg = '';
         }
-
+        
         return (
             <div>
                 <label>Your name</label>

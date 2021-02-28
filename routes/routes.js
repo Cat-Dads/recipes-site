@@ -1,6 +1,7 @@
 import express from 'express';
 import Home from '../components/home';
 import FirstSsr from '../components/firstssr';
+import AllRecipes from '../components/recipes/allRecipes';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import hbs from 'handlebars';
@@ -18,7 +19,9 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/firstssr', async (req, res) => {
-    const reactComp = renderToString(<FirstSsr />);
+    const reactComp = renderToString(
+        <FirstSsr />
+    );
 
     res.render('home', {
         layout: 'default',
@@ -27,5 +30,17 @@ router.get('/firstssr', async (req, res) => {
         root: reactComp
     });
 });
+
+router.get('/allrecipes', async(req, res) => {
+    const reactComp = renderToString(<AllRecipes />);
+
+    res.render('allRecipes', {
+        layout: 'default',
+        script: 'allRecipes',
+        css: 'allRecipes',
+        title: 'All Recipes',
+        root: reactComp
+    });
+})
 
 export default router;

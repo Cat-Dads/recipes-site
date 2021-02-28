@@ -4,7 +4,8 @@ const config = {
     entry: {
         vendor: ['@babel/polyfill', 'react'],
         home: ['./webpack/entries/home.js'],
-        firstssr: ['./webpack/entries/firstssr.js']
+        firstssr: ['./webpack/entries/firstssr.js'],
+        allRecipes: ['./webpack/entries/allRecipes.js']
     },
     output: {
         path: path.resolve(__dirname, 'public/js'),
