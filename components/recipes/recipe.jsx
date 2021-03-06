@@ -15,4 +15,4 @@ class Recipe extends React.Component {
     }
 }
 
-export default AllRecipes;
+export default Recipe;
