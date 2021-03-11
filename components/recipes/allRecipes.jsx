@@ -15,6 +15,9 @@ class AllRecipes extends React.Component {
                     <div className="all-recipe-title">
                         <h3>{recipe.title}</h3>
                     </div>
+                    <div className="all-recipe-author">
+                        <p>by {recipe.author}</p>
+                    </div>
                     <div className="all-recipe-description">
                         <p>{recipe.description}</p>
                     </div>

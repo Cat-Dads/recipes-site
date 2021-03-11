@@ -2,8 +2,10 @@ import express from 'express';
 import Home from '../components/home';
 import FirstSsr from '../components/firstssr';
 import AllRecipes from '../components/recipes/allRecipes';
+import CreateRecipe from '../components/recipes/createRecipe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import * as https from 'https';
 
 const router = express.Router();
 
@@ -31,44 +33,38 @@ router.get('/firstssr', async (req, res) => {
 });
 
 router.get('/allrecipes', async(req, res) => {
+    https.get('https://127.0.0.1:5001/api/recipe/', (apiRes) => {
+        apiRes.on('data', data => {
+            const recipes = JSON.parse(data);
 
-    let initialProps = [
-        {
-            id: 1,
-            title: 'Recipe 1',
-            description: `It's my favorite recipe`,
-            rating: "5"
-        },
-        {
-            id: 2,
-            title: 'Recipe 2',
-            description: `Its my 2nd favorite recipe`,
-            rating: "4.5"
-        },
-        {
-            id: 3,
-            title: 'Recipe 3',
-            description: `Its my 3rd favorite recipe`,
-            rating: "3"
-        }
-    ];
+            const reactComp = renderToString(
+                <AllRecipes
+                    recipes={recipes ? recipes : null}
+                />
+            );
+        
+            res.render('allRecipes', {
+                layout: 'default',
+                script: 'allRecipes',
+                css: 'allRecipes',
+                title: 'All Recipes',
+                initialProps: JSON.stringify(recipes ? recipes : null),
+                root: reactComp
+            });
+        });
+    });
+});
 
-    const reactComp = renderToString(
-        <AllRecipes
-            recipes={initialProps}
-        />
-    );
+router.get('/createrecipe', async(req, res) => {
+    const reactComp = renderToString(<CreateRecipe />);
 
-    console.log(reactComp);
-
-    res.render('allRecipes', {
+    res.render('createRecipe', {
         layout: 'default',
-        script: 'allRecipes',
-        css: 'allRecipes',
-        title: 'All Recipes',
-        initialProps: JSON.stringify(initialProps),
+        script: 'createRecipe',
+        css: 'createRecipe',
+        title: 'Create Recipe',
         root: reactComp
     });
-})
+});
 
 export default router;
