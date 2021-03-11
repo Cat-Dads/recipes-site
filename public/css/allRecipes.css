@@ -1,0 +1,39 @@
+.all-recipe-item {
+    display: flex;
+    padding: 5px;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.all-recipe-item div {
+    padding: 5px;
+}
+
+.all-recipe-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-recipe-title {
+    display: flex;
+}
+
+.all-recipe-description {
+    display: flex;
+}
+
+.all-recipe-rating {
+    flex: none;
+    border-right: 1px solid #d6d6d6;
+    align-items: center;
+    display: flex;
+    width: 7%;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.all-recipe-rating span {
+    width: 100%;
+    text-align: center;
+}
