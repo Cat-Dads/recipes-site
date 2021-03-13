@@ -6,6 +6,7 @@ import CreateRecipe from '../components/recipes/createRecipe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import * as https from 'https';
+import Recipe from '../components/recipes/recipe';
 
 const router = express.Router();
 
@@ -32,8 +33,35 @@ router.get('/firstssr', async (req, res) => {
     });
 });
 
+router.get('/recipe/:recipeId', async(req, res) => {
+    https.get(`https://cat-dads-recipe-api.azurewebsites.net/api/recipe/${req.params.recipeId}/`, (apiRes) => {
+        apiRes.on('data', data => {
+            const recipe = JSON.parse(data);
+
+            const reactComp = renderToString(
+                <Recipe
+                    title={recipe.title}
+                    author={recipe.author}
+                    description={recipe.description}
+                    ingredients={recipe.ingredients}
+                    directions={recipe.directions}
+                />
+            );
+
+            res.render('recipe', {
+                layout: 'default',
+                script: 'recipe',
+                css: 'recipe',
+                title: `${recipe.title} by ${recipe.author}`,
+                initialProps: JSON.stringify(recipe ? recipe : null),
+                root: reactComp
+            });
+        });
+    });
+});
+
 router.get('/allrecipes', async(req, res) => {
-    https.get('https://127.0.0.1:5001/api/recipe/', (apiRes) => {
+    https.get('https://cat-dads-recipe-api.azurewebsites.net/api/recipe/', (apiRes) => {
         apiRes.on('data', data => {
             const recipes = JSON.parse(data);
 

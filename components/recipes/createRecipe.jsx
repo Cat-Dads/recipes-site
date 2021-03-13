@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from '../util/modal';
 import { Plus } from 'react-bootstrap-icons'
 
 class CreateRecipe extends React.Component {
@@ -11,12 +12,16 @@ class CreateRecipe extends React.Component {
             author: '',
             ingredients: [],
             directions: '',
-            newIngredient: ''
+            newIngredient: '',
+            newRecipeId: 0,
+            isLoading: false
         }
     }
 
     handleSubmit = (ev) => {
         ev.preventDefault();
+
+        this.setState({ isLoading: true });
 
         let ingredientsArray = this.state.ingredients.map((ingredient, idx) => {
             return {
@@ -36,7 +41,7 @@ class CreateRecipe extends React.Component {
             })
         }
 
-        fetch('https://localhost:5001/api/recipe/', requestOptions)
+        fetch('https://cat-dads-recipe-api.azurewebsites.net/api/recipe/', requestOptions)
             .then(async res => {
                 const data = await res.json();
 
@@ -51,7 +56,9 @@ class CreateRecipe extends React.Component {
                     author: '',
                     ingredients: [],
                     directions: '',
-                    newIngredient: ''
+                    newIngredient: '',
+                    newRecipeId: data.id,
+                    isLoading: false
                 });
             })
             .catch(err => {
@@ -97,83 +104,111 @@ class CreateRecipe extends React.Component {
 
     render() {
         return (
-            <div className="create-recipe-form">
-                <form onSubmit={this.handleSubmit}>
-                    <div className="create-recipe-title mb-3">
-                        <label className="form-label" htmlFor="title">Title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            name="title"
-                            placeholder="Title"
-                            value={this.state.title}
-                            onChange={(ev) => this.setState({ title: ev.target.value })} />
-                    </div>
-                    <div className="create-recipe-author mb-3">
-                        <label className="form-label" htmlFor="author">Author</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="author"
-                            name="author"
-                            placeholder="Author"
-                            value={this.state.author}
-                            onChange={(ev) => this.setState({ author: ev.target.value })} />
-                    </div>
-                    <div className="create-recipe-description mb-3">
-                        <label className="form-label" htmlFor="description">Description</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="description"
-                            name="description"
-                            placeholder="Decription"
-                            value={this.state.description}
-                            onChange={(ev) => this.setState({ description: ev.target.value })} />
-                    </div>
-                    <div className="create-recipe-ingredients mb-3">
-                        <label className="form-label" htmlFor="ingredients">Ingredients</label>
-                        {this.renderIngredients()}
-                        <div className="input-group mb-3">
-                            <button
-                                type="button"
-                                className="btn btn-primary"
-                                disabled={this.state.newIngredient ? null : true}
-                                onClick={() => this.saveIngredient()}
-                            >
-                                <Plus
-                                    height="24"
-                                    width="24"
-                                />
-                            </button>
+            <div>
+                {!this.state.newRecipeId ? null :
+                    <Modal
+                        title="Recipe created!"
+                        text={`Your recipe titled "${this.state.title}" was created!"`}
+                        primaryIsLink={true}
+                        primaryLinkUrl={`/recipe/${this.state.newRecipeId}/`}
+                        primaryLinkText="Take me there"
+                        secondaryButtonText="Create another"
+                        secondaryButtonAction={() => this.setState({ newRecipeId: 0 })}
+                        onClose={() => this.setState({ newRecipeId: 0 })}
+                    />
+                }
+                <div className="create-recipe-form">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="create-recipe-title mb-3">
+                            <label className="form-label" htmlFor="title">Title</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="newIngredient"
-                                name="ingredient"
-                                placeholder="Ingredient"
-                                value={this.state.newIngredient}
-                                onChange={(ev) => this.setState({ newIngredient: ev.target.value })}
-                            />
+                                id="title"
+                                name="title"
+                                placeholder="Title"
+                                value={this.state.title}
+                                disabled={this.state.isLoading}
+                                onChange={(ev) => this.setState({ title: ev.target.value })} />
                         </div>
-                    </div>
-                    <div className="create-recipe-directions mb-3">
-                        <label className="form-label" htmlFor="directions">Directions</label>
-                        <textarea
-                            className="form-control"
-                            id="directions"
-                            name="directions"
-                            placeholder="Directions"
-                            rows="5"
-                            value={this.state.directions}
-                            onChange={(ev) => this.setState({ directions: ev.target.value })} />
-                    </div>
-                    <input
-                        type="submit"
-                        className="btn btn-primary"
-                        value="Create Recipe" />
-                </form>
+                        <div className="create-recipe-author mb-3">
+                            <label className="form-label" htmlFor="author">Author</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="author"
+                                name="author"
+                                placeholder="Author"
+                                value={this.state.author}
+                                disabled={this.state.isLoading}
+                                onChange={(ev) => this.setState({ author: ev.target.value })} />
+                        </div>
+                        <div className="create-recipe-description mb-3">
+                            <label className="form-label" htmlFor="description">Description</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="description"
+                                name="description"
+                                placeholder="Decription"
+                                value={this.state.description}
+                                disabled={this.state.isLoading}
+                                onChange={(ev) => this.setState({ description: ev.target.value })} />
+                        </div>
+                        <div className="create-recipe-ingredients mb-3">
+                            <label className="form-label" htmlFor="ingredients">Ingredients</label>
+                            {this.renderIngredients()}
+                            <div className="input-group mb-3">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    disabled={this.state.newIngredient || !this.state.isLoading ? null : true}
+                                    onClick={() => this.saveIngredient()}
+                                >
+                                    <Plus
+                                        height="24"
+                                        width="24"
+                                    />
+                                </button>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="newIngredient"
+                                    name="ingredient"
+                                    placeholder="Ingredient"
+                                    value={this.state.newIngredient}
+                                    disabled={this.state.isLoading}
+                                    onChange={(ev) => this.setState({ newIngredient: ev.target.value })}
+                                />
+                            </div>
+                        </div>
+                        <div className="create-recipe-directions mb-3">
+                            <label className="form-label" htmlFor="directions">Directions</label>
+                            <textarea
+                                className="form-control"
+                                id="directions"
+                                name="directions"
+                                placeholder="Directions"
+                                rows="5"
+                                value={this.state.directions}
+                                disabled={this.state.isLoading}
+                                onChange={(ev) => this.setState({ directions: ev.target.value })} />
+                        </div>
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={this.state.isLoading}
+                        >
+                            {!this.state.isLoading ? "Create recipe" : null}
+                            {this.state.isLoading &&
+                                "Creating recipe... "
+                            }
+                            {this.state.isLoading && 
+                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            }
+                        </button>
+                    </form>
+                </div>
             </div>
         );
     }
