@@ -7,7 +7,7 @@
     "dev": "nodemon --exec babel-node server.js",
     "webpack": "webpack -wd",
     "build": "webpack",
-    "heroku-postbuild": "npm install",
+    "heroku-postbuild": "npm install && webpack",
     "start": "babel-node server.js"
   },
   "repository": {
