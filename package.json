@@ -7,7 +7,8 @@
     "dev": "nodemon --exec babel-node server.js",
     "webpack": "webpack -wd",
     "build": "webpack",
-    "start": "./node_modules/.bin/babel-node server.js"
+    "heroku-postbuild": "npm install",
+    "start": "babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,9 @@
   },
   "homepage": "https://github.com/cat-dads/recipes-site#readme",
   "dependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
