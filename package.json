@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/cat-dads/recipes-site#readme",
   "dependencies": {
+    "babel-node": "0.0.1-security",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
