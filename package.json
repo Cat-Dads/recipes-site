@@ -7,7 +7,7 @@
     "dev": "nodemon --exec babel-node server.js",
     "webpack": "webpack -wd",
     "build": "webpack",
-    "start": "webpack-dev-server --port 3030"
+    "start": "babel-node server.js"
   },
   "repository": {
     "type": "git",
