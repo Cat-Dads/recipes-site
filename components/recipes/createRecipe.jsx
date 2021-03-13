@@ -51,7 +51,6 @@ class CreateRecipe extends React.Component {
                 }
 
                 this.setState({
-                    title: '',
                     description: '',
                     author: '',
                     ingredients: [],
@@ -113,8 +112,8 @@ class CreateRecipe extends React.Component {
                         primaryLinkUrl={`/recipe/${this.state.newRecipeId}/`}
                         primaryLinkText="Take me there"
                         secondaryButtonText="Create another"
-                        secondaryButtonAction={() => this.setState({ newRecipeId: 0 })}
-                        onClose={() => this.setState({ newRecipeId: 0 })}
+                        secondaryButtonAction={() => this.setState({ newRecipeId: 0, title: '' })}
+                        onClose={() => this.setState({ newRecipeId: 0, title: '' })}
                     />
                 }
                 <div className="create-recipe-form">

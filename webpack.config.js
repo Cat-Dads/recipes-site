@@ -6,7 +6,8 @@ const config = {
         home: ['./webpack/entries/home.js'],
         firstssr: ['./webpack/entries/firstssr.js'],
         allRecipes: ['./webpack/entries/allRecipes.js'],
-        createRecipe: ['./webpack/entries/createRecipe.js']
+        createRecipe: ['./webpack/entries/createRecipe.js'],
+        recipe: ['./webpack/entries/recipe.js']
     },
     output: {
         path: path.resolve(__dirname, 'public/js'),
